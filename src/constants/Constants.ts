@@ -12,6 +12,5 @@ export const DELAY_BETWEEN_SERVER_EVENTS = 1000; // in ms
 export const INVALID_BET_AMOUNT = -1;
 
 // Other
-// export const BASE_WS_URL = "wss://api.hossainsafwan.com/ws/game";
 export const BASE_WS_URL = import.meta.env.VITE_BASE_WS_URL;
 export const START_COMMAND = "START";
