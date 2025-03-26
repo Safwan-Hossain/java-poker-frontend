@@ -13,5 +13,5 @@ export const INVALID_BET_AMOUNT = -1;
 
 // Other
 // export const BASE_WS_URL = "wss://api.hossainsafwan.com/ws/game";
-export const BASE_WS_URL = "ws://localhost:8080/ws/game";
+export const BASE_WS_URL = import.meta.env.VITE_BASE_WS_URL;
 export const START_COMMAND = "START";
