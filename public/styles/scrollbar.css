@@ -1,0 +1,20 @@
+/* Scrollbar Styling */
+.info-box::-webkit-scrollbar {
+    width: 10px;
+}
+
+.info-box::-webkit-scrollbar-track {
+    background: var(--info-box-bg);
+}
+
+.info-box::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 6px;
+    border: 2px solid var(--info-box-bg);
+}
+
+/* Firefox */
+.info-box {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--info-box-bg);
+}

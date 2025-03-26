@@ -1,0 +1,82 @@
+:root {
+    --card-width: 4.5rem;
+    --card-height: 6.5rem;
+    --card-padding: 6px;
+    --card-radius: 10px;
+    --card-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    --card-hover-translate: -4px;
+}
+
+/* layout */
+.card-hand-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* card */
+.card {
+    width: var(--card-width);
+    height: var(--card-height);
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    position: relative;
+    font-family: 'Georgia', serif;
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(var(--card-hover-translate));
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* card corners */
+.card .corner.top {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.card .corner.bottom {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    font-size: 1rem;
+    line-height: 1;
+    transform: rotate(180deg);
+}
+
+/* suit */
+.card .suit {
+    font-size: 24px;
+    align-self: center;
+    margin-top: 18px;
+}
+
+/* suit colors */
+.card.red .corner,
+.card.red .suit {
+    color: crimson;
+}
+
+.card.black .corner,
+.card.black .suit {
+    color: black;
+}
+
+/* pot display */
+.pot-display {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--text-color);
+    font-weight: bold;
+    text-align: center;
+}

@@ -1,0 +1,14 @@
+:root {
+    /* Deep, warm red for a luxurious vintage casino atmosphere */
+    --bg-color: #3A1C1A;
+    --container-bg: #6B3E2E;
+    --info-box-bg: #4D2A20;
+    --border-color: #C79A5F;
+    --text-color: #F5E7D3;
+    --input-text-color: #3B2A24;
+    --button-bg: #B4644D;
+    --button-hover-bg: #C8745D;
+    --input-bg: #F7E8D9;
+    --outline-color: #A0774A;
+    --shadow-color: rgba(199, 154, 95, 0.5);
+}

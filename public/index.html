@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Poker Game</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="game-container">
+    <!-- BACK BUTTON -->
+    <button id="backButton" class="back-button" style="display: none;">
+        <i class="fa-solid fa-caret-left"></i>
+    </button>
+
+    <!-- MAIN MENU OPTIONS -->
+    <div id="mainMenuContainer">
+        <h1 class="game-title">Java Poker</h1>
+        <p class="welcome-message">Welcome to Java Poker!</p>
+        <div class="button-container">
+            <button class="menu-button" id="newGame">Start New Game</button>
+            <button class="menu-button" id="joinGame">Join Existing Game</button>
+            <button class="menu-button" id="quitGame">Quit</button>
+        </div>
+        <p class="credit">by Safwan Hossain</p>
+    </div>
+
+    <!-- NEW GAME -->
+    <div id="nameFormContainer">
+        <label for="nameInput"> <b>The stakes are set!</b> <br>What’s your name?</label>
+        <input type="text" id="nameInput" placeholder="Your Name">
+        <button class="name-submit-button" id="nameSubmitButton">Submit</button>
+    </div>
+
+    <!-- JOIN GAME -->
+    <div id="nameTableFormContainer">
+        <h2>Join an Existing Game</h2>
+
+        <div class="form-group">
+            <label for="nameTableInput">Your Name</label>
+            <input type="text" id="nameTableInput" placeholder="Enter your name">
+        </div>
+
+        <div class="form-group">
+            <label>Enter Table ID:</label>
+            <div class="table-id-container">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+                <input type="text" class="table-id-input" maxlength="1" placeholder="#">
+            </div>
+        </div>
+        <button id="nameTableSubmitButton">Join Game</button>
+    </div>
+
+    <!-- LOBBY SECTION -->
+    <div id="lobbyContainer" style="display: none;">
+        <h2>Waiting Lobby</h2>
+
+        <!-- Session ID Display -->
+        <div id="sessionIdContainer" class="session-id-container">
+            <span id="sessionIdDisplay">Table ID: <span id="sessionIdText"></span></span>
+            <button id="copySessionIdButton" class="copy-button">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+
+        <div id="lobbyPlayers"></div>
+
+        <!-- New message container -->
+        <p id="hostMessage" style="display: none; font-style: italic;">⏳ Waiting for host to start the game...</p>
+
+        <button id="startGameButton" class="menu-button" disabled>Start Game</button>
+    </div>
+    <div class="game-interaction" id="gameInteraction" style="display: flex;">
+        <!-- Left Panel: Main game UI -->
+        <div class="game-left-panel">
+            <div id="cardRevealContainer" class="card-reveal-container"></div>
+
+            <div class="info-box" id="infoBox">
+                <ul id="narrationList" class="narration-list"></ul>
+            </div>
+
+            <div class="input-container horizontal-controls">
+                <div class="action-buttons">
+                    <button id="foldButton" class="action-button">Fold</button>
+                    <button id="callButton" class="action-button">Call</button>
+                    <button id="betRaiseButton" class="action-button">Bet</button>
+                    <button id="quitButton" class="action-button">Quit</button>
+                </div>
+
+                <div class="bet-slider-wrapper">
+                    <input type="range" id="betSlider" class="bet-slider" min="0" max="100" value="0" />
+                    <span id="betValueDisplay" class="bet-value">$0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Player cards and pot -->
+        <div class="game-right-panel">
+            <div id="playerCards" class="card-hand-container"></div>
+            <div id="totalPotDisplay" class="pot-display">$0 in Pot</div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script type="module" src="/src/main.ts"></script>
+<script src="https://kit.fontawesome.com/318e4ccccd.js" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+
+
+</body>
+</html>

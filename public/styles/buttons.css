@@ -1,0 +1,144 @@
+/* Button Container */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Menu Button */
+.menu-button {
+    width: 80%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.05s ease-in-out;
+}
+
+.menu-button:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+/* Submit Buttons */
+.name-submit-button,
+#nameTableSubmitButton {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.05s ease-in-out;
+    font-weight: bold;
+}
+
+.name-submit-button:hover,
+#nameTableSubmitButton:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: contents;
+}
+
+.action-button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    min-width: 90px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 6px var(--shadow-color);
+}
+
+.action-button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.05);
+}
+
+.action-button:active:not(:disabled) {
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:disabled {
+    background-color: #8b5e52;
+    color: #ddd;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Quit Button Variant */
+#quitButton {
+    background-color: #8B2E2E;
+}
+
+#quitButton:hover:not(:disabled) {
+    background-color: #A43A3A;
+}
+
+/* Back Button */
+/* Vintage Luxury Styled Back Button */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--border-color);
+    border: 2px solid var(--text-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), inset 0 0 8px var(--shadow-color);
+}
+
+.back-button:hover {
+    background-color: var(--text-color);
+    transform: scale(1.1);
+}
+
+.back-button:active {
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Session Copy Button */
+.copy-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: var(--border-color);
+    transition: color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.copy-icon {
+    font-size: 22px;
+    color: var(--border-color);
+    transition: color 0.2s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.session-id-container:hover .copy-icon {
+    color: var(--text-color);
+}
+
+.copy-icon:active {
+    transform: scale(0.9);
+}

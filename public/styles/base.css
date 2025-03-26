@@ -1,0 +1,26 @@
+body {
+    font-family: 'Gloock', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+}
+
+button, input {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+.info-box {
+    height: 180px;
+    overflow-y: scroll;
+    padding: 0;
+    background-color: var(--info-box-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+

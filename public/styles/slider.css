@@ -1,0 +1,93 @@
+/* Layout */
+.horizontal-controls {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+}
+
+.bet-slider-wrapper {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* Slider */
+.bet-slider {
+    -webkit-appearance: none;
+    margin: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--input-bg);
+    border-radius: 5px;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Webkit track */
+.bet-slider::-webkit-slider-runnable-track {
+    height: 6px;
+    background: var(--input-bg);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+/* Webkit thumb */
+.bet-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    background-color: var(--button-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    margin-top: -7px;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.bet-slider::-webkit-slider-thumb:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.1);
+}
+
+/* Firefox track and thumb */
+.bet-slider::-moz-range-track {
+    height: 6px;
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
+.bet-slider::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    background-color: var(--button-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    box-shadow: 0 2px 6px var(--shadow-color);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.bet-slider::-moz-range-thumb:hover {
+    background-color: var(--button-hover-bg);
+    transform: scale(1.1);
+}
+
+.bet-slider:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--outline-color);
+}
+
+/* Value display */
+.bet-value {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--border-color);
+}
