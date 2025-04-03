@@ -19,6 +19,7 @@ export class GameUI {
     private quitButton!: HTMLButtonElement;
     private playerCardsContainer!: HTMLDivElement;
     private totalPotAmount!: HTMLElement;
+    private gameContainer!: HTMLDivElement;
 
 
 
@@ -42,7 +43,8 @@ export class GameUI {
         this.betRaiseButton = document.getElementById("betRaiseButton") as HTMLButtonElement;
         this.quitButton = document.getElementById("quitButton") as HTMLButtonElement;
         this.playerCardsContainer = document.getElementById("playerCards") as HTMLDivElement;
-        this.totalPotAmount = document.getElementById("totalPotAmount") as HTMLDivElement;
+        this.totalPotAmount = document.getElementById("totalPotDisplay") as HTMLDivElement;
+        this.gameContainer = document.getElementById("gameContainer") as HTMLDivElement;
 
 
     }
@@ -82,9 +84,14 @@ export class GameUI {
         return cardEl;
     }
 
+    public displayPlayerHand(playerName: string, cards: string[], handRank: string) {
+        const message = GameMessages.getPlayerHandRevealMessage(playerName, cards, handRank);
+        void this.narration.queueMessage(message);
+    }
 
-    public displayWinners(winnerNames: string[], sharePerWinner: number): void {
-        const message = GameMessages.getWinnersMessage(winnerNames, sharePerWinner);
+
+    public displayWinners(winners: { name: string; handRank: string }[], sharePerWinner: number): void {
+        const message = GameMessages.getWinnersMessage(winners, sharePerWinner);
         void this.narration.queueMessage(message);
     }
 
@@ -122,7 +129,7 @@ export class GameUI {
 
         this.betRaiseButton.addEventListener("click", () => {
             const amount = this.getSelectedBetAmount();
-            const action = amount > 0 ? PlayerAction.RAISE : PlayerAction.BET;
+            const action = PlayerAction.BET;
             callback(action, amount);
             this.disableActionButtons();
         });
@@ -134,10 +141,12 @@ export class GameUI {
 
     public show(): void {
         this.gameInteraction.style.display = "flex";
+        this.gameContainer.classList.add("game-container--expanded");
     }
 
     public hide(): void {
         this.gameInteraction.style.display = "none";
+        this.gameContainer.classList.remove("game-container--expanded");
     }
 
     public disableActionButtons(): void {
@@ -161,9 +170,11 @@ export class GameUI {
         const canBetOrRaise = actions.has(PlayerAction.BET) || actions.has(PlayerAction.RAISE);
         this.betRaiseButton.disabled = !canBetOrRaise;
 
-        if (canBetOrRaise) {
-            const amount = this.getSelectedBetAmount();
-            this.betRaiseButton.textContent = amount > 0 ? "Raise" : "Bet";
+        if (actions.has(PlayerAction.BET)) {
+            this.betRaiseButton.textContent = "Bet";
+        }
+        else if (actions.has(PlayerAction.RAISE)) {
+            this.betRaiseButton.textContent = "Raise";
         }
     }
 
@@ -193,6 +204,12 @@ export class GameUI {
         void this.narration.queueMessage(GameMessages.getMyPlayerCardsRevealMessage(cards));
     }
 
+
+    announceGameOver(winnerName: string, winnerChips: number) {
+        const gameOverMessage = GameMessages.getGameOverMessage(winnerName, winnerChips);
+        void this.narration.queueMessage(gameOverMessage);
+    }
+
     public clearRevealedCards(): void {
         this.cardRevealContainer.innerHTML = "";
     }
@@ -211,4 +228,5 @@ export class GameUI {
     public getSelectedBetAmount(): number {
         return parseInt(this.betSlider.value, 10);
     }
+
 }

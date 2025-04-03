@@ -36,6 +36,7 @@ export class UserClient {
 
     private readonly connectionStatus$ = new BehaviorSubject<ConnectionStatus>(ConnectionStatus.DISCONNECTED);
     private readonly CLOSE_CODE_NOT_ACCEPTABLE = 406;
+    private readonly CLOSE_CODE_NORMAL = 1000;
 
 
     public connectToNewGame(playerName: string): Observable<void> {
@@ -138,6 +139,11 @@ export class UserClient {
     private shouldRetryConnection(code: number): boolean {
         if (code === this.CLOSE_CODE_NOT_ACCEPTABLE) {
             console.error("Session rejected by server. Stopping retries.");
+            return false;
+        }
+
+        if (code === this.CLOSE_CODE_NORMAL) {
+            console.log("Session ended by server");
             return false;
         }
 

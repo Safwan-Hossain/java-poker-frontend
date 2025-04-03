@@ -6,6 +6,7 @@ import { RoundStateUpdate } from "./impl/RoundStateUpdate";
 import { ServerMessageUpdate } from "./impl/ServerMessageUpdate";
 import { PlayerSetupUpdate } from "./impl/PlayerSetupUpdate";
 import { ShowdownResultUpdate } from "./impl/ShowdownResultUpdate";
+import {GameOverUpdate} from "./impl/GameOverUpdate.ts";
 
 /**
  * Interface for handling game state updates using the Visitor Pattern.
@@ -19,4 +20,5 @@ export interface GameUpdateVisitor {
     handleConnectionStatusUpdate(update: ConnectionStatusUpdate): void;
     handlePlayerSetupUpdate(update: PlayerSetupUpdate): void;
     handleShowdownResultUpdate(update: ShowdownResultUpdate): void;
+    handleGameOverUpdate(update: GameOverUpdate): void;
 }

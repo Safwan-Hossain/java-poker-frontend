@@ -37,7 +37,6 @@ export class PlayerTurnUpdate extends GameUpdate {
     }
 
     dispatchTo(visitor: GameUpdateVisitor): void {
-        console.log("Dispatching to playerTurnUpdate");
         visitor.handlePlayerTurnUpdate(this);
     }
 }

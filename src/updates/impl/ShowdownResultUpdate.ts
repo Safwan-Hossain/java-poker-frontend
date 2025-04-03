@@ -12,7 +12,7 @@ export class ShowdownResultUpdate extends GameUpdate {
     readonly players: ReadonlyArray<Player>;
     readonly winnersForThisRound: ReadonlyArray<Player>;
     readonly bankruptPlayers: ReadonlyArray<Player>;
-    readonly playerHandEvaluations: ReadonlyMap<Player, HandEvaluation>;
+    readonly playerHandEvaluations: ReadonlyMap<String, HandEvaluation>;
     readonly tableCards: ReadonlyArray<Card>;
     readonly totalPot: number;
     readonly sharePerWinner: number;
@@ -21,7 +21,7 @@ export class ShowdownResultUpdate extends GameUpdate {
         players: Player[],
         winnersForThisRound: Player[],
         bankruptPlayers: Player[],
-        playerHandEvaluations: Map<Player, HandEvaluation>,
+        playerHandEvaluations: Map<String, HandEvaluation>,
         tableCards: Card[],
         totalPot: number,
         sharePerWinner: number
@@ -41,7 +41,12 @@ export class ShowdownResultUpdate extends GameUpdate {
             raw.players.map((p: any) => Player.fromJSON(p)),
             raw.winnersForThisRound.map((p: any) => Player.fromJSON(p)),
             raw.bankruptPlayers.map((p: any) => Player.fromJSON(p)),
-            new Map(Object.entries(raw.playerHandEvaluations).map(([key, value]) => [Player.fromJSON(key), HandEvaluation.fromJSON(value)])),
+            new Map(
+                Object.entries(raw.playerHandEvaluations).map(([key, value]) => [
+                    key,
+                    HandEvaluation.fromJSON(value)
+                ])
+            ),
             raw.tableCards.map((c: any) => Card.fromJSON(c)),
             raw.totalPot,
             raw.sharePerWinner

@@ -8,6 +8,7 @@ import { PlayerTurnUpdate } from "../updates/impl/PlayerTurnUpdate";
 import { RoundStateUpdate } from "../updates/impl/RoundStateUpdate";
 import { ServerMessageUpdate } from "../updates/impl/ServerMessageUpdate";
 import { ShowdownResultUpdate } from "../updates/impl/ShowdownResultUpdate";
+import {GameOverUpdate} from "../updates/impl/GameOverUpdate.ts";
 
 export class GameUpdateParser {
 
@@ -34,6 +35,8 @@ export class GameUpdateParser {
                 return ServerMessageUpdate.fromJSON(raw);
             case GameUpdateType.SHOWDOWN_RESULT_UPDATE:
                 return ShowdownResultUpdate.fromJSON(raw);
+            case GameUpdateType.GAME_OVER_UPDATE:
+                return GameOverUpdate.fromJSON(raw);
             default:
                 throw new Error(`Unknown update type received: ${(raw as any).updateType}`);
         }

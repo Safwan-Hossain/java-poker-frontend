@@ -32,7 +32,7 @@ export class NameFormUI {
 
     public show(): void {
         const backButton = document.getElementById("backButton");
-        if (this.nameFormContainer) this.nameFormContainer.style.display = "block";
+        if (this.nameFormContainer) this.nameFormContainer.style.display = "flex";
         if (backButton) backButton.style.display = "block";
     }
 

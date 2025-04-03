@@ -15,11 +15,26 @@ export class GameMessages {
 
     private static roundStages: Record<RoundState, (cards?: string[]) => string> = {
         [RoundState.PRE_FLOP]: () => `🃏 The cards are dealt, and the battle begins!`,
-        [RoundState.FLOP]: (cards = []) => `🎲 The Flop hits the table: ${cards.join(", ")}. The game just got real!`,
-        [RoundState.TURN]: (cards = []) => `🔥 The Turn card is revealed: ${cards[0]}. Things are heating up!`,
-        [RoundState.RIVER]: (cards = []) => `🌊 The River card is out: ${cards[0]}. This is the final moment of truth!`,
-        [RoundState.SHOWDOWN]: () => `🏆 It's SHOWDOWN time! The players reveal their hands. Who will take the pot?`,
+
+        [RoundState.FLOP]: (cards = []) =>
+            `🎲 The Flop hits the table: ${cards.join(", ")}. The game just got real!`,
+
+        [RoundState.TURN]: (cards = []) =>
+            `🔥 The Turn card is revealed: ${cards[cards.length - 1]}. The board now shows: ${cards.join(", ")}.`,
+
+        [RoundState.RIVER]: (cards = []) =>
+            `🌊 The River card is out: ${cards[cards.length - 1]}. The final board is: ${cards.join(", ")}.`,
+
+        [RoundState.SHOWDOWN]: () =>
+            `🏆 It's SHOWDOWN time! The players reveal their hands. Who will take the pot?`,
     };
+
+    public static getPlayerHandRevealMessage(playerName: string, cards: string[], handRank: string): string {
+        if (cards.length === 0) {
+            return `❌ An error occurred. ${playerName}'s hand is empty.`;
+        }
+        return `🃏 ${playerName} reveals their hand: ${cards.join(", ")}. They have a ${handRank}! Let's see how it holds up!`;
+    }
 
     public static getPlayerActionMessage(playerName: string, action: PlayerAction, amount?: number): string {
         return this.playerActions[action]?.(playerName, amount) || `⚡ ${playerName} makes a bold move! What could it be?`;
@@ -48,14 +63,28 @@ export class GameMessages {
         return `🃏 Community cards revealed: ${cards.join(", ")}`;
     }
 
-    public static getWinnersMessage(winnerNames: string[], sharePerWinner: number): string {
-        if (winnerNames.length === 1) {
-            return `🏆 ${winnerNames[0]} wins the pot and takes home $${sharePerWinner}!`;
-        } else {
-            const names = winnerNames.join(", ");
-            return `🤝 It's a split pot! ${names} each win $${sharePerWinner}`;
-        }
+    public static getGameOverMessage(winnerName: string, totalPot: number): string {
+        return `==================\n🎉 GAME OVER! 🎉\n==================\n🏆 ${winnerName} emerges victorious, claiming the total pot of $${totalPot}!\nThanks for playing!\n==================`;
     }
+
+
+    public static getWinnersMessage(
+        winners: { name: string; handRank: string }[],
+        sharePerWinner: number
+    ): string {
+        if (winners.length === 0) {
+            return `❌ An error occurred. No winners were detected.`;
+        }
+
+        const winnerText = winners
+            .map(winner => `${winner.name} (${winner.handRank})`)
+            .join(", ");
+
+        return winners.length === 1
+            ? `🏆 ${winnerText} wins the pot and takes home $${sharePerWinner}!`
+            : `🤝 It's a split pot! ${winnerText} each win $${sharePerWinner}.`;
+    }
+
 
     public static getTotalPotMessage(totalPot: number): string {
         return `💰 The total pot is now $${totalPot}`;

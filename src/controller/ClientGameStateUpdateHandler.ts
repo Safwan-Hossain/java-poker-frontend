@@ -14,6 +14,7 @@ import {ClientGameState} from "../models/ClientGameState.ts";
 import {Player} from "../models/Player.ts";
 import {PlayerAction} from "../enumeration/PlayerAction.ts";
 import {ConnectionStatus} from "../enumeration/ConnectionStatus.ts";
+import {GameOverUpdate} from "../updates/impl/GameOverUpdate.ts";
 
 export class ClientGameStateUpdateHandler implements GameUpdateVisitor {
     private localGameState: ClientGameState;
@@ -23,14 +24,12 @@ export class ClientGameStateUpdateHandler implements GameUpdateVisitor {
     }
 
     public updateGameState(update: GameUpdate): void {
-        console.log("Update game state", typeof update);
         update.dispatchTo(this);
     }
 
     public handlePlayerSetupUpdate(update: PlayerSetupUpdate): void {
         this.localGameState.myPlayerId = update.playerId;
         this.localGameState.isMyPlayerHost = update.isHost;
-        console.log("LOCAL STATE IN HANDLER: ", this.localGameState)
     }
 
     public handleGameStateSnapshotUpdate(update: GameStateSnapshotUpdate): void {
@@ -57,16 +56,16 @@ export class ClientGameStateUpdateHandler implements GameUpdateVisitor {
                 player.isFolded = true;
                 break;
             case PlayerAction.BET:
-                player.chips -= update.betAmount;
-                this.localGameState.totalPot += update.betAmount;
+                player.chips = update.updatedPlayerChips;
+                this.localGameState.totalPot = update.updatedTotalPot;
                 break;
             case PlayerAction.RAISE:
-                player.chips -= update.betAmount;
-                this.localGameState.totalPot += update.betAmount;
+                player.chips = update.updatedPlayerChips;
+                this.localGameState.totalPot = update.updatedTotalPot;
                 break;
             case PlayerAction.CALL:
-                player.chips -= update.betAmount;
-                this.localGameState.totalPot += update.betAmount;
+                player.chips = update.updatedPlayerChips;
+                this.localGameState.totalPot = update.updatedTotalPot;
                 break;
             case PlayerAction.CHECK:
                 break;
@@ -123,5 +122,8 @@ export class ClientGameStateUpdateHandler implements GameUpdateVisitor {
 
     private isMyPlayer(playerId: string): boolean {
         return this.localGameState.myPlayerId === playerId;
+    }
+
+    handleGameOverUpdate(_update: GameOverUpdate): void {
     }
 }

@@ -27,6 +27,7 @@ export class Player {
         return copy;
     }
     static fromJSON(raw: any): Player {
+
         const player = new Player(raw.name, raw.playerId);
         player._chips = raw.chips ?? 0;
         player._hand = raw.hand ? raw.hand.map((c: any) => Card.fromJSON(c)) : [];

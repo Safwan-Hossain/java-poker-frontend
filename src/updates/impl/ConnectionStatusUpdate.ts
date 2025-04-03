@@ -24,7 +24,6 @@ export class ConnectionStatusUpdate extends GameUpdate {
 
 
     dispatchTo(visitor: GameUpdateVisitor): void {
-        console.log("Updating connection update")
         visitor.handleConnectionStatusUpdate(this);
     }
 }

@@ -14,7 +14,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "noEmit": true,  // Prevents emitting JS files (handled by Vite)
+    "noEmit": true,
     "outDir": "dist",
     "rootDir": "./src",
 

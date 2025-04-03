@@ -13,6 +13,8 @@ import {Player} from "../models/Player";
 import {UIManager} from "../view/UIManager.ts";
 import {ConnectionStatus} from "../enumeration/ConnectionStatus.ts";
 import {RoundState} from "../enumeration/RoundState.ts";
+import {HandRank} from "../enumeration/HandRank.ts";
+import {GameOverUpdate} from "../updates/impl/GameOverUpdate.ts";
 
 export class ViewUpdateHandler implements GameUpdateVisitor {
     constructor(
@@ -26,12 +28,10 @@ export class ViewUpdateHandler implements GameUpdateVisitor {
 
     handleGameStateSnapshotUpdate(update: GameStateSnapshotUpdate): void {
 
-        console.log("SNAPSHOT RECEIVED");
         const player = this.getPlayerById(update.playerIdWithTurn);
 
         if (!player) { return; }
 
-        console.log(update.roundState == RoundState.PRE_FLOP, update.roundState);
         if (update.roundState == RoundState.PRE_FLOP) {
             console.log("GAME STARTED");
             this.uiManager.onGameStarted();
@@ -42,7 +42,6 @@ export class ViewUpdateHandler implements GameUpdateVisitor {
 
     handlePlayerActionUpdate(update: PlayerActionUpdate): void {
         const player = this.getPlayerById(update.playerId);
-        console.log("PLAYER: ", player, update)
         if (player) {
             this.uiManager.displayPlayerAction(player.name, update.action, update.betAmount);
         }
@@ -75,9 +74,11 @@ export class ViewUpdateHandler implements GameUpdateVisitor {
     }
 
     handleConnectionStatusUpdate(update: ConnectionStatusUpdate): void {
-        console.log("CONNECTION UPDATE: ", update);
         if (update.connectionStatus == ConnectionStatus.JOINED) {
             this.uiManager.onNewPlayerJoined(update.playerName, update.playerId);
+        }
+        if (update.connectionStatus == ConnectionStatus.DISCONNECTED) {
+            this.uiManager.onPlayerLeft(update.playerId);
         }
     }
 
@@ -87,15 +88,30 @@ export class ViewUpdateHandler implements GameUpdateVisitor {
     }
 
     handleShowdownResultUpdate(update: ShowdownResultUpdate): void {
-        // Show final table cards
-        // this.uiManager.displayTableCards(update.tableCards);
 
-        // Announce winners and how much each won
-        if (update.winnersForThisRound.length > 0) {
-            const winnerNames = update.winnersForThisRound.map(p => p.name);
-            const share = update.sharePerWinner;
-            this.uiManager.displayWinners(winnerNames, share);
-        }
+        update.players.forEach(player => {
+            const handEvaluation = update.playerHandEvaluations.get(player.playerId);
+
+            if (!handEvaluation) return;
+
+            const playerName = player.name;
+            const cards = handEvaluation ? handEvaluation.getCards().map(card => card.toString()) : ['Unknown cards'];
+            const handRank = HandRank.getDescription(handEvaluation.handRank);
+
+            this.uiManager.displayPlayerHand(playerName, cards, handRank);
+        });
+
+        const winners = update.winnersForThisRound
+            .map(winner => {
+                const handEvaluation = update.playerHandEvaluations.get(winner.playerId)!;
+                return {
+                    name: winner.name,
+                    handRank: HandRank.getDescription(handEvaluation.handRank),
+                };
+            });
+
+        this.uiManager.displayWinners(winners, update.sharePerWinner);
+
 
         // Display total pot
         this.uiManager.displayTotalPot(update.totalPot);
@@ -107,6 +123,10 @@ export class ViewUpdateHandler implements GameUpdateVisitor {
         }
     }
 
+
+    handleGameOverUpdate(update: GameOverUpdate) {
+        this.uiManager.announceGameOver(update.winner.name, update.winner.chips);
+    }
 
     private getPlayerById(playerId: string): Player | null {
         return this.localState.players.find(player => player.playerId === playerId) || null;

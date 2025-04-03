@@ -1,11 +1,11 @@
-import { catchError, tap } from "rxjs/operators";
-import { PlayerAction } from "../enumeration/PlayerAction";
-import { UserClient } from "../client/UserClient";
-import { ClientGameState } from "../models/ClientGameState";
-import { ViewUpdateHandler } from "./ViewUpdateHandler";
-import { ClientGameStateUpdateHandler } from "./ClientGameStateUpdateHandler.ts";
-import { GameUpdate } from "../updates/GameUpdate";
-import { INVALID_BET_AMOUNT } from "../constants/Constants";
+import {catchError, tap} from "rxjs/operators";
+import {PlayerAction} from "../enumeration/PlayerAction";
+import {UserClient} from "../client/UserClient";
+import {ClientGameState} from "../models/ClientGameState";
+import {ViewUpdateHandler} from "./ViewUpdateHandler";
+import {ClientGameStateUpdateHandler} from "./ClientGameStateUpdateHandler.ts";
+import {GameUpdate} from "../updates/GameUpdate";
+import {INVALID_BET_AMOUNT} from "../constants/Constants";
 import {PlayerActionUpdate} from "../updates/impl/PlayerActionUpdate";
 import {UIManager} from "../view/UIManager.ts";
 import {Observable, of} from "rxjs";
@@ -79,8 +79,7 @@ export class GameSessionController {
 
 
     private logUpdateType(update: GameUpdate): void {
-        console.warn(`Received update type: ${typeof update}`);
-        console.log(update)
+        console.warn(`Received update type: ${typeof update}`, update);
     }
 
 
@@ -105,8 +104,17 @@ export class GameSessionController {
 
 
     private createPlayerActionUpdate(action: PlayerAction, betAmount: number): PlayerActionUpdate {
-        console.log("LOCAL STATE: ", this.localState)
-        return new PlayerActionUpdate(this.localState.myPlayerId, action, betAmount);
+
+        if (action == PlayerAction.BET || action == PlayerAction.RAISE) {
+            if (this.localState.validPlayerActions.has(PlayerAction.BET)) {
+                action = PlayerAction.BET;
+            }
+            else {
+                action = PlayerAction.RAISE;
+            }
+
+        }
+        return new PlayerActionUpdate(this.localState.myPlayerId, action, betAmount, -1, -1);
     }
 
 

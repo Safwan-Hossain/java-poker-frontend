@@ -36,7 +36,6 @@ export class UIManager {
         this.nameFormUI.onBackRequested = () => this.showMainMenu();
 
         this.nameFormUI.onNameSubmitted = (playerName) => {
-            console.log("Trying to connect to lobby");
             this.onCreateLobby?.(playerName);
             this.lobbyUI.toggleHostControls(true);
             this.showLobby();
@@ -69,8 +68,12 @@ export class UIManager {
         // this.gameUI.displayTableCards(cards);
     }
 
-    public displayWinners(winnerNames: string[], sharePerWinner: number): void {
-        this.gameUI.displayWinners(winnerNames, sharePerWinner);
+    public displayPlayerHand(playerName: string, cards: string[], handRank: string): void {
+        this.gameUI.displayPlayerHand(playerName, cards, handRank);
+    }
+
+    public displayWinners(winners: { name: string; handRank: string }[], sharePerWinner: number): void {
+        this.gameUI.displayWinners(winners, sharePerWinner);
     }
 
     public displayTotalPot(totalPot: number): void {
@@ -79,6 +82,10 @@ export class UIManager {
 
     public announceBankruptPlayers(playerNames: string[]): void {
         this.gameUI.announceBankruptPlayers(playerNames);
+    }
+
+    public announceGameOver(winnerName: string, winnerChips: number): void {
+        this.gameUI.announceGameOver(winnerName, winnerChips);
     }
 
 
@@ -101,6 +108,10 @@ export class UIManager {
 
     public onNewPlayerJoined(playerName: string, playerId: string) {
         this.lobbyUI.addPlayer(playerName, playerId);
+    }
+
+    public onPlayerLeft(playerId: string) {
+        this.lobbyUI.removePlayer(playerId);
     }
 
     public addMultiplePlayers(players: Player[]): void {

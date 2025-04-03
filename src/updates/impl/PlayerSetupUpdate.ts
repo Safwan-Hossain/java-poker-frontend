@@ -22,7 +22,6 @@ export class PlayerSetupUpdate extends GameUpdate {
     }
 
     static fromJSON(raw: any): PlayerSetupUpdate {
-        console.log(raw);
         return new PlayerSetupUpdate(
             raw.tableSessionId,
             raw.playerName,
